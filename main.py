@@ -8,7 +8,22 @@ app = FastAPI()
 def home():
     return {"message": "hi brooo"}
 
+# ==========================================
+# ➕ NEW ADDITION ROUTE
+# ==========================================
+# Matches URLs like: http://127.0.0
+@app.get("/add")
+def add_numbers(num1: int, num2: int):
+    result = num1 + num2
+    return {
+        "num1": num1,
+        "num2": num2,
+        "operation": "addition",
+        "result": result
+    }
+
 # 2. Your Dynamic Route: Matches "/vishnu", "/vivek", or any other name
+# NOTE: This dynamic route MUST stay below specific paths like /add and /square
 @app.get("/{name}")
 def greet_user(name: str):
     return {"message": f"hi {name}"}
@@ -35,5 +50,4 @@ def get_user_profile(user_id: int, status: str = "offline"):
 
 
 if __name__ == "__main__":
-    # Change "main:app" to match your actual file name if it isn't main.py
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
